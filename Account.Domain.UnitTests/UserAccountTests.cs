@@ -17,5 +17,27 @@ namespace Account.Domain.UnitTests
                 .Should()
                 .Be("@Azerty456");
         }
+
+        [DataRow("@Azerty123")]
+        [DataRow("$JohnDoe0")]
+        [TestMethod]
+        public void Valid_Passwords(string password)
+        {
+            new Action(() => new Password(password))
+                 .Should()
+                 .NotThrow();
+        }
+
+        [DataRow("Azerty123")]
+        [DataRow("#123456789")]
+        [DataRow("ARandomPasswordQuiteLongEnough")]
+        [TestMethod]
+        public void Invalid_Passwords(string password)
+        {
+            new Action(() => new Password(password))
+                 .Should()
+                 .Throw<UnsecuredPasswordException>()
+                 .WithMessage("Unsecured password submitted.");
+        }
     }
 }
