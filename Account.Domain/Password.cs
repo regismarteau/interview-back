@@ -23,7 +23,7 @@ namespace Account.Domain
         {
             return IsPasswordLongEnough(password)
                 && HasAtLeastOneUppercaseLetter(password)
-                && HasAtLeastOneUppercaseLetter(password)
+                && HasAtLeastOneLowercaseLetter(password)
                 && HasAtLeastOneSpecialCharacter(password)
                 && HasAtLeastOneNumber(password);
         }
