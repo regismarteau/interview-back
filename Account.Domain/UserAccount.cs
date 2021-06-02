@@ -8,7 +8,7 @@ namespace Account.Domain
         {
             this.Id = Guid.NewGuid();
             this.Email = email;
-            this.Password = new Password(password);
+            this.Password = password;
         }
 
         public Guid Id { get; }
@@ -17,7 +17,7 @@ namespace Account.Domain
 
         public void ChangePassword(Password newPassword)
         {
-            this.Password = new Password(newPassword);
+            this.Password = newPassword;
         }
     }
 }
