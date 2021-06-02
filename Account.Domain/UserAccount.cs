@@ -4,7 +4,7 @@ namespace Account.Domain
 {
     public class UserAccount
     {
-        public UserAccount(string email, string password)
+        public UserAccount(string email, Password password)
         {
             this.Id = Guid.NewGuid();
             this.Email = email;
@@ -15,7 +15,7 @@ namespace Account.Domain
         public string Email { get; }
         public string Password { get; private set; }
 
-        public void ChangePassword(string newPassword)
+        public void ChangePassword(Password newPassword)
         {
             this.Password = new Password(newPassword);
         }
