@@ -8,33 +8,39 @@ namespace Account.Domain.UnitTests
     public class UserAccountTests
     {
         [Test]
-        public void The_password_of_an_user_account_could_be_changed()
+
+        [TestCase("@Azerty123")]
+        [TestCase("$JohnDoe0")]
+        public void The_password_of_an_user_account_could_be_changed(string password)
         {
             UserAccount userAccount = AnAlreadyRegisteredUserAccount();
-            
-            userAccount.ChangePassword("@Azerty456");
+
+            userAccount.ChangePassword(password);
             
             userAccount.Password
                 .Should()
-                .BeEquivalentTo("@Azerty456");
+                .BeEquivalentTo(password);
         }
 
-        [DataRow("@Azerty123")]
-        [DataRow("$JohnDoe0")]
-        [TestMethod]
-        public void Valid_Passwords(string password)
+        [TestCase("AAzerty123")]
+        [TestCase("abc")]
+        [TestCase("Azertyy123")]
+        [TestCase("Azerty1233")]
+        [Test]
+        public void Registration_should_throw_an_error_when_an_invalid_password_is_submitted(string password)
         {
             new Action(() => new UserAccount("my_custom_mail@email.com", password))
                  .Should()
-                 .NotThrow();
+                 .Throw<UnsecuredPasswordException>()
+                 .WithMessage("Unsecured password submitted.");
         }
 
-        [DataRow("AAzerty123")]
-        [DataRow("abc")]
-        [DataRow("Azertyy123")]
-        [DataRow("Azerty1233")]
-        [TestMethod]
-        public void Invalid_Passwords(string password)
+        [TestCase("AAzerty123")]
+        [TestCase("abc")]
+        [TestCase("Azertyy123")]
+        [TestCase("Azerty1233")]
+        [Test]
+        public void Change_user_account_s_password_should_throw_an_error_when_an_invalid_password_is_submitted(string password)
         {
             UserAccount userAccount = AnAlreadyRegisteredUserAccount();
             new Action(() => userAccount.ChangePassword(password))
