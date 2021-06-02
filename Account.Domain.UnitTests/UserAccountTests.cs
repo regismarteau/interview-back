@@ -22,6 +22,8 @@ namespace Account.Domain.UnitTests
                 .BeEquivalentTo(password);
         }
 
+        [TestCase(null)]
+        [TestCase("")]
         [TestCase("AAzerty123")]
         [TestCase("abc")]
         [TestCase("Azertyy123")]
@@ -35,6 +37,8 @@ namespace Account.Domain.UnitTests
                  .WithMessage("Unsecured password submitted.");
         }
 
+        [TestCase(null)]
+        [TestCase("")]
         [TestCase("AAzerty123")]
         [TestCase("abc")]
         [TestCase("Azertyy123")]

@@ -8,7 +8,7 @@ namespace Account.Domain
 
         public Password(string password)
         {
-            if(!IsValid(password))
+            if(password == null || !IsValid(password))
             {
                 throw new UnsecuredPasswordException();
             }
