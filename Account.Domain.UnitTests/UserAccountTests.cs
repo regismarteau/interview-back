@@ -25,9 +25,9 @@ namespace Account.Domain.UnitTests
         [TestCase(null)]
         [TestCase("")]
         [TestCase("AAzerty123")]
-        [TestCase("abc")]
-        [TestCase("Azertyy123")]
-        [TestCase("Azerty1233")]
+        [TestCase("Aazerty123")]
+        [TestCase("AzerAtyA123")]
+        [TestCase("AzeratyA123")]
         [Test]
         public void Registration_should_throw_an_error_when_an_invalid_password_is_submitted(string password)
         {
@@ -40,9 +40,9 @@ namespace Account.Domain.UnitTests
         [TestCase(null)]
         [TestCase("")]
         [TestCase("AAzerty123")]
-        [TestCase("abc")]
-        [TestCase("Azertyy123")]
-        [TestCase("Azerty1233")]
+        [TestCase("Aazerty123")]
+        [TestCase("AzerAtyA123")]
+        [TestCase("AzeratyA123")]
         [Test]
         public void Change_user_account_s_password_should_throw_an_error_when_an_invalid_password_is_submitted(string password)
         {

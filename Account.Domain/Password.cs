@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Account.Domain
 {
@@ -8,7 +9,7 @@ namespace Account.Domain
 
         public Password(string password)
         {
-            if(password == null || !IsValid(password))
+            if(string.IsNullOrEmpty(password) || !IsValid(password))
             {
                 throw new UnsecuredPasswordException();
             }
@@ -17,22 +18,17 @@ namespace Account.Domain
 
         private static bool IsValid(string password)
         {
-            return IsPasswordLongEnough(password)
+            return !HasMoreThanTwoTimesTheSameChar(password)
                 && !HasTwoSameCharInARow(password);
-        }
-
-        private static bool IsPasswordLongEnough(string password)
-        {
-            return password.Length >= 8;
         }
 
         private static bool HasTwoSameCharInARow(string password)
         {
-            CharEnumerator enumerator = password.GetEnumerator();
+            CharEnumerator enumerator = password.ToLower().GetEnumerator();
             char? previous = default;
-            while(enumerator.MoveNext())
+            while (enumerator.MoveNext())
             {
-                if(previous == enumerator.Current)
+                if (previous == enumerator.Current)
                 {
                     return true;
                 }
@@ -40,6 +36,14 @@ namespace Account.Domain
             }
 
             return false;
+        }
+
+        private static bool HasMoreThanTwoTimesTheSameChar(string password)
+        {
+            return password
+                .ToLower()
+                .GroupBy(c => c)
+                .Any(c => c.Count() > 2);
         }
 
         public static implicit operator string(Password password)
