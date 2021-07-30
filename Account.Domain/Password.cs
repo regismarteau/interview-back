@@ -9,17 +9,17 @@ namespace Account.Domain
 
         public Password(string password)
         {
-            if(string.IsNullOrEmpty(password) || !IsValid(password))
+            if(string.IsNullOrEmpty(password) || IsInvalid(password))
             {
                 throw new UnsecuredPasswordException();
             }
             this.value = password;
         }
 
-        private static bool IsValid(string password)
+        private static bool IsInvalid(string password)
         {
-            return !HasMoreThanTwoTimesTheSameChar(password)
-                && !HasTwoSameCharInARow(password);
+            return HasMoreThanTwoTimesTheSameChar(password)
+                || HasTwoSameCharInARow(password);
         }
 
         private static bool HasTwoSameCharInARow(string password)
