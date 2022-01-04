@@ -31,7 +31,7 @@ namespace Account.Domain.UnitTests
         [Test]
         public void Registration_should_throw_an_error_when_an_invalid_password_is_submitted(string password)
         {
-            new Action(() => new UserAccount("my_custom_mail@email.com", password))
+            this.Invoking(_ => new UserAccount("my_custom_mail@email.com", password))
                  .Should()
                  .Throw<UnsecuredPasswordException>()
                  .WithMessage("Unsecured password submitted.");
@@ -47,7 +47,7 @@ namespace Account.Domain.UnitTests
         public void Change_user_account_s_password_should_throw_an_error_when_an_invalid_password_is_submitted(string password)
         {
             UserAccount userAccount = AnAlreadyRegisteredUserAccount();
-            new Action(() => userAccount.ChangePassword(password))
+            this.Invoking(_ => userAccount.ChangePassword(password))
                  .Should()
                  .Throw<UnsecuredPasswordException>()
                  .WithMessage("Unsecured password submitted.");
